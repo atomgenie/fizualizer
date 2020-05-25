@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"path"
@@ -27,6 +28,7 @@ func HandleServer(bind string, serverBind string) {
 	frontendServer.Handle("/", staticsFiles)
 
 	go func() {
+		fmt.Println("Listening: http://localhost:" + bind)
 		http.ListenAndServe(":"+bind, frontendServer)
 	}()
 
