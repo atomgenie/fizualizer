@@ -8,6 +8,7 @@ export interface State {
 export enum ACTIONS {
     SET_DATABASE_URL = "database/SET_DATABASE_URL",
     SET_LOADED = "database/SET_LOADED",
+    RESET = "database/RESET",
 }
 
 interface SetDatabaseUrl {
@@ -22,4 +23,8 @@ interface SetLoaded {
     type: ACTIONS.SET_LOADED
 }
 
-export type Actions = SetDatabaseUrl | SetLoaded
+interface Reset {
+    type: ACTIONS.RESET
+}
+
+export type Actions = SetDatabaseUrl | SetLoaded | Reset

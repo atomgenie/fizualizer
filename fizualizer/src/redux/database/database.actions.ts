@@ -11,3 +11,7 @@ export const setDatabaseUrl = (url: string, projectId: string): Actions => ({
 export const setLoaded = (): Actions => ({
     type: ACTIONS.SET_LOADED,
 })
+
+export const reset = (): Actions => ({
+    type: ACTIONS.RESET,
+})

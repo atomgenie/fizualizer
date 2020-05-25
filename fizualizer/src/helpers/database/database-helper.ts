@@ -1,4 +1,4 @@
-import { setDatabaseUrl, setLoaded } from "redux/database/database.actions"
+import { setDatabaseUrl, setLoaded, reset } from "redux/database/database.actions"
 import { store } from "redux/store"
 import { ApiHelper } from "helpers/api/api-helper"
 
@@ -30,6 +30,11 @@ export class DatabaseHelper {
 
     private clearUrl() {
         localStorage.removeItem(localStorageKey)
+    }
+
+    public async clear() {
+        this.clearUrl()
+        store.dispatch(reset())
     }
 
     public async init() {

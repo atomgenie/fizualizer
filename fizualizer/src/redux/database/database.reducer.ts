@@ -26,6 +26,13 @@ export const databaseReducer: Reducer<State, Actions> = (
                 loaded: true,
             }
         }
+
+        case ACTIONS.RESET: {
+            return {
+                ...defaultState,
+                loaded: true,
+            }
+        }
         default: {
             return state
         }

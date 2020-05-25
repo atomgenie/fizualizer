@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { ApiHelper } from "helpers/api/api-helper"
-import { ListItem, ListItemText, List, ListSubheader } from "@material-ui/core"
+import { ListItem, ListItemText, List, ListSubheader, Button } from "@material-ui/core"
 
 interface props {
     setPath: (newPath: string[]) => void
@@ -11,22 +11,26 @@ export const Document: React.FC<props> = ({ path, setPath }) => {
     const [subCollections, setSubCollection] = useState<string[]>([])
     const [datas, setDatas] = useState<{ key: string; value: any }[]>([])
 
-    useEffect(() => {
-        new ApiHelper().getDocument(path).then(data => {
-            setSubCollection(data.collections.map(elm => elm.name))
-            setDatas(
-                Object.keys(data.data).map(elm => {
-                    return {
-                        key: elm,
-                        value: data.data[elm].toString(),
-                    }
-                }),
-            )
-        })
+    const loadData = useCallback(async () => {
+        const data = await new ApiHelper().getDocument(path)
+        setSubCollection(data.collections.map(elm => elm.name))
+        setDatas(
+            Object.keys(data.data).map(elm => {
+                return {
+                    key: elm,
+                    value: data.data[elm].toString(),
+                }
+            }),
+        )
     }, [path])
+
+    useEffect(() => {
+        loadData()
+    }, [loadData])
 
     return (
         <div>
+            <Button onClick={loadData}>Refresh</Button>
             <List
                 subheader={<ListSubheader component="div">Subcollections</ListSubheader>}
             >
