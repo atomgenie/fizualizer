@@ -1,0 +1,16 @@
+.path {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 2px 30px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.pathElm {
+    margin-right: 20px;
+    cursor: pointer;
+
+    &:hover {
+        color: blue;
+    }
+}
