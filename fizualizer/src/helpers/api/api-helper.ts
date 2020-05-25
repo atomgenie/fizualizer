@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const serverUrl = "http://localhost:5000"
+const serverUrl = "http://localhost:8938"
 
 interface DocumentEntity {
     id: string

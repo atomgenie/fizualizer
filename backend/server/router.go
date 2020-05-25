@@ -5,10 +5,10 @@ import (
 	"net/http"
 )
 
-func initTouter() {
-	http.HandleFunc("/healthcheck", controllers.HandleHealthcheck)
-	http.HandleFunc("/firebase", controllers.HandleFirestore)
-	http.HandleFunc("/collection", controllers.HandleGetCollection)
-	http.HandleFunc("/document", controllers.HandleGetDocument)
-	http.HandleFunc("/list", controllers.ListCollection)
+func initTouter(server *http.ServeMux) {
+	server.HandleFunc("/healthcheck", controllers.HandleHealthcheck)
+	server.HandleFunc("/firebase", controllers.HandleFirestore)
+	server.HandleFunc("/collection", controllers.HandleGetCollection)
+	server.HandleFunc("/document", controllers.HandleGetDocument)
+	server.HandleFunc("/list", controllers.ListCollection)
 }

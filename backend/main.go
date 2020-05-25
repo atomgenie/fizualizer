@@ -7,9 +7,10 @@ import (
 
 func main() {
 
-	port := flag.String("port", "5000", "The port of the server")
+	port := flag.String("port", "3000", "The port of the server")
+	serverPort := flag.String("server-port", "8938", "The port of the server")
 
 	flag.Parse()
 
-	server.HandleServer(":" + *port)
+	server.HandleServer(*port, *serverPort)
 }
