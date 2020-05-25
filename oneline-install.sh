@@ -9,10 +9,6 @@ build() {
     ./build.sh || exit 1
 }
 
-add_to_bin {
-    sudo ln -s backend/fizualizer /usr/bin/fizualizer
-}
-
 update() {
     cd .fizualizer
     git checkout .
@@ -33,4 +29,4 @@ else
 fi
 
 build
-add_to_bin
+add_link
