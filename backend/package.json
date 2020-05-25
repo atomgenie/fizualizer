@@ -1,0 +1,11 @@
+{
+    "name": "@neutrinos/fizualize",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "build": "go build"
+    },
+    "bin": {
+        "fizualizer": "./fizualizer"
+    }
+}

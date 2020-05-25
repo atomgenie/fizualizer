@@ -1,7 +1,16 @@
 #!/bin/bash
 
+add_link() {
+    cd backend
+    yarn link
+}
+
 build() {
     ./build.sh || exit 1
+}
+
+add_to_bin {
+    sudo ln -s backend/fizualizer /usr/bin/fizualizer
 }
 
 update() {
@@ -24,3 +33,4 @@ else
 fi
 
 build
+add_to_bin

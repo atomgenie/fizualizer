@@ -1,4 +1,7 @@
 {
     "private": true,
-    "workspaces": ["fizualizer"]
+    "workspaces": [
+        "fizualizer",
+        "backend"
+    ]
 }

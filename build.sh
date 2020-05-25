@@ -8,4 +8,5 @@ yarn run build || exit 1
 cd $BASE_PWD
 cp -r fizualizer/build backend/build
 cd backend
-go build || exit 1
+yarn run build || exit 1
+cd $BASE_PWD
