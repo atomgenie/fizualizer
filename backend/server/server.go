@@ -8,7 +8,7 @@ import (
 )
 
 // HandleServer HandleServer
-func HandleServer(bind string, serverBind string) {
+func HandleServer(bind string, serverBind string, onlyBackend bool) {
 
 	isDev := os.Getenv("IS_FIZUALIZER_DEV")
 	ex, _ := os.Executable()
@@ -27,10 +27,13 @@ func HandleServer(bind string, serverBind string) {
 
 	frontendServer.Handle("/", staticsFiles)
 
-	go func() {
-		fmt.Println("Listening: http://localhost:" + bind)
-		http.ListenAndServe(":"+bind, frontendServer)
-	}()
+	if !onlyBackend {
+
+		go func() {
+			fmt.Println("Listening: http://localhost:" + bind)
+			http.ListenAndServe(":"+bind, frontendServer)
+		}()
+	}
 
 	http.ListenAndServe(":"+serverBind, backendServer)
 }
