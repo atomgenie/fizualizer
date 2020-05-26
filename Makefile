@@ -8,6 +8,7 @@ build/fizualizer: $(GO_SOURCES) build
 	mv backend/fizualizer build/fizualizer
 
 build/build: $(REACT_SOURCES) build
+	yarn install
 	cd fizualizer && yarn run build
 	mv fizualizer/build build/build
 

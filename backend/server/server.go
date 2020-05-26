@@ -15,7 +15,7 @@ func HandleServer(bind string, serverBind string, onlyBackend bool) {
 	frontPath := path.Join(path.Dir(ex), "build")
 
 	if len(isDev) == 0 || isDev != "true" {
-		frontPath = path.Join(os.Getenv("HOME"), ".fizualizer/backend/build")
+		frontPath = path.Join(os.Getenv("HOME"), ".fizualizer/build/build")
 
 	}
 

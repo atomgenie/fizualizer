@@ -1,5 +1,9 @@
 #!/bin/bash
 
+clean() {
+    find . -name node_modules -type d | xargs rm -rf
+}
+
 add_link() {
     cd build
     yarn unlink
@@ -31,3 +35,4 @@ fi
 
 build
 add_link
+clean
