@@ -1,12 +1,13 @@
 #!/bin/bash
 
 add_link() {
-    cd backend
+    cd build
+    yarn unlink
     yarn link
 }
 
 build() {
-    ./build.sh || exit 1
+    make || exit 1
 }
 
 update() {
