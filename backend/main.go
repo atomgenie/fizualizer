@@ -1,13 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"fizualizer/electron"
 	"fizualizer/server"
 	"flag"
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/asticode/go-astikit"
 	"github.com/asticode/go-astilectron"
@@ -71,34 +69,28 @@ func main() {
 			MenuOptions: []*astilectron.MenuItemOptions{{
 				Label: astikit.StrPtr("File"),
 				SubMenu: []*astilectron.MenuItemOptions{
-					{
-						Label: astikit.StrPtr("About"),
-						OnClick: func(e astilectron.Event) (deleteListener bool) {
-							if err := bootstrap.SendMessage(w, "about", htmlAbout, func(m *bootstrap.MessageIn) {
-								// Unmarshal payload
-								var s string
-								if err := json.Unmarshal(m.Payload, &s); err != nil {
-									l.Println(fmt.Errorf("unmarshaling payload failed: %w", err))
-									return
-								}
-								l.Printf("About modal has been displayed and payload is %s!\n", s)
-							}); err != nil {
-								l.Println(fmt.Errorf("sending about event failed: %w", err))
-							}
-							return
-						},
-					},
+
 					{Role: astilectron.MenuItemRoleClose},
+					{Role: astilectron.MenuItemRoleQuit},
+				},
+			}, {
+				Label: astikit.StrPtr("Edit"),
+				SubMenu: []*astilectron.MenuItemOptions{{
+					Role: astilectron.MenuItemRolePaste,
+				}, {
+					Role: astilectron.MenuItemRoleCopy,
+				}, {
+					Role: astilectron.MenuItemRoleCut,
+				}, {
+					Role: astilectron.MenuItemRoleSelectAll,
+				}, {
+					Role: astilectron.MenuItemRoleUndo,
+				}, {
+					Role: astilectron.MenuItemRoleRedo,
+				},
 				},
 			}},
 			OnWait: func(_ *astilectron.Astilectron, ws []*astilectron.Window, _ *astilectron.Menu, _ *astilectron.Tray, _ *astilectron.Menu) error {
-				w = ws[0]
-				go func() {
-					time.Sleep(5 * time.Second)
-					if err := bootstrap.SendMessage(w, "check.out.menu", "Don't forget to check out the menu!"); err != nil {
-						l.Println(fmt.Errorf("sending check.out.menu event failed: %w", err))
-					}
-				}()
 				return nil
 			},
 			RestoreAssets: RestoreAssets,
