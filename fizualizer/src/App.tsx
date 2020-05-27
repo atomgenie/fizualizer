@@ -12,9 +12,20 @@ import { ElectronHelper } from "helpers/electron/electron-helper"
 function App() {
     const [openMenu, setOpenMenu] = useState(false)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const [isLoadingReady, setIsLoadingReady] = useState(false)
 
     useEffect(() => {
-        new ElectronHelper().init()
+        if (new ElectronHelper().isElectron(window)) {
+            document.addEventListener(
+                "astilectron-ready",
+                () => {
+                    setIsLoadingReady(true)
+                },
+                { once: true },
+            )
+        } else {
+            setIsLoadingReady(true)
+        }
     }, [])
 
     const databaseState = useSelector<StoreType, StoreType["database"]>(
@@ -31,8 +42,10 @@ function App() {
     }, [databaseState.connected, databaseState.loaded])
 
     useEffect(() => {
-        new DatabaseHelper().init()
-    }, [])
+        if (isLoadingReady) {
+            new DatabaseHelper().init()
+        }
+    }, [isLoadingReady])
 
     const resetConf = async () => {
         await new DatabaseHelper().clear()
@@ -55,7 +68,7 @@ function App() {
             </div>
             <Container>
                 <AskDatabaseUrl open={showPromtUrl} />
-                {databaseState.connected && <View />}
+                {databaseState.connected && isLoadingReady && <View />}
             </Container>
         </div>
     )
