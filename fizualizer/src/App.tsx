@@ -6,11 +6,16 @@ import { useSelector } from "react-redux"
 import { AskDatabaseUrl } from "components/database/AskDatabaseUrl"
 import { View } from "./components/view/View"
 import { Container, Menu as UIMenu, Button, MenuItem } from "@material-ui/core"
+import { ElectronHelper } from "helpers/electron/electron-helper"
 // import styles from "./App.module.scss"
 
 function App() {
     const [openMenu, setOpenMenu] = useState(false)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+    useEffect(() => {
+        new ElectronHelper().init()
+    }, [])
 
     const databaseState = useSelector<StoreType, StoreType["database"]>(
         state => state.database,

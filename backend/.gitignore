@@ -1,2 +1,6 @@
 /fizualizer
 /build
+/output
+/resources/app
+/bind_*
+/vendor

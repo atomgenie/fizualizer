@@ -8,11 +8,27 @@ import (
 	"fizualizer/utils"
 	"fmt"
 	"net/http"
+
+	bootstrap "github.com/asticode/go-astilectron-bootstrap"
 )
 
 type firestorePayload struct {
 	URL       string `json:"url"`
 	ProjectID string `json:"projectId"`
+}
+
+func setFirestore(data firestorePayload) error {
+
+	ctx := context.Background()
+	state.SetContext(ctx)
+	client, err := firebasehelper.InitFirestore(ctx, data.URL, data.ProjectID)
+	if err != nil {
+		return err
+	}
+
+	state.SetFirestore(client)
+
+	return nil
 }
 
 // HandleFirestore HandleFirestore
@@ -36,14 +52,25 @@ func HandleFirestore(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx := context.Background()
-	state.SetContext(ctx)
-	client, err := firebasehelper.InitFirestore(ctx, data.URL, data.ProjectID)
+	err = setFirestore(data)
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
 
-	state.SetFirestore(client)
+}
+
+// HandleFirestoreElectron Handle with electron
+func HandleFirestoreElectron(m bootstrap.MessageIn) bool {
+	var data firestorePayload
+
+	err := json.Unmarshal(m.Payload, &data)
+	if err != nil {
+		return false
+	}
+
+	err = setFirestore(data)
+	return err == nil
 }
