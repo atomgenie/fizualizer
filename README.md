@@ -1,3 +1,5 @@
+> This project is now useless since Cloud Firestore emulator has its own UI. (better than this project).
+
 # Fizualizer
 
 UI for the Cloud Firestore emulator
